@@ -1,0 +1,12 @@
+# User personalization data — never commit
+user.json
+
+# Generated artifacts (used during local skill runs)
+/output/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

@@ -1,0 +1,20 @@
+{
+  "name": "hello-counter",
+  "version": "1.2.0",
+  "description": "Tiny CLI that counts lines in stdin",
+  "main": "src/index.js",
+  "bin": {
+    "hello-counter": "src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node test/index.test.js"
+  },
+  "keywords": ["cli", "lines", "stdin"],
+  "author": "hello-counter contributors",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {}
+}

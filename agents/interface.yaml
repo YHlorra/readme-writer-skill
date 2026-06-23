@@ -1,0 +1,94 @@
+name: readme-writer
+version: 1.1.0
+description: >
+  Generate production-quality README.md for any project by analyzing its codebase,
+  tech stack, and structure. Default output is bilingual (README.md English + README.zh-CN.md Chinese).
+
+triggers:
+  - pattern: "写readme"
+  - pattern: "写README"
+  - pattern: "生成readme"
+  - pattern: "帮我写readme"
+  - pattern: "generate readme"
+  - pattern: "create readme"
+
+inputs:
+  - name: project_path
+    description: Path to the project root directory
+    required: false
+    default: "."
+
+  - name: project_name
+    description: Override project name (auto-detected from package.json/README if omitted)
+    required: false
+
+  - name: description
+    description: Override project description
+    required: false
+
+  - name: template
+    description: Template variant — length variants (standard/minimal) or project-type variants (library/cli/webapp/monorepo). For internal tools, use "standard".
+    required: false
+    default: "standard"
+    enum:
+      - "standard"
+      - "minimal"
+      - "library"
+      - "cli"
+      - "webapp"
+      - "monorepo"
+
+  - name: language
+    description: Output language(s). 'both' (default) generates README.md (English) + README.zh-CN.md (Chinese) with cross-link toggle. 'en' or 'zh-CN' for single-language output.
+    required: false
+    default: "both"
+    enum:
+      - "both"
+      - "en"
+      - "zh-CN"
+
+outputs:
+  - name: readme_path_en
+    description: Path to the generated README.md (English). Always written when language includes 'en' or 'both'.
+    type: file
+  - name: readme_path_zh
+    description: Path to the generated README.zh-CN.md (Chinese). Written only when language includes 'zh-CN' or 'both'.
+    type: file
+
+workflow:
+  steps:
+    - name: analyze
+      description: Scan project files to extract identity, tech stack, entry points, and install steps
+      tools:
+        - ctx_batch_execute
+        - Glob
+        - Read
+
+    - name: assemble
+      description: Generate each README section following template structure
+      tools:
+        - Write
+
+    - name: verify
+      description: Check badge URLs, TOC anchors, and reference links for consistency
+      tools:
+        - Grep
+
+quality_checks:
+  - "Every badge URL uses shields.io pattern with correct OWNER/REPO"
+  - "TOC anchors match section headings exactly"
+  - "All reference-style link definitions are used and all usages are defined"
+  - "No leftover placeholder text without <!-- TODO --> markers"
+  - "Installation steps are runnable"
+
+references:
+  - path: "references/template-structure.md"
+    description: Full section spec with HTML/Markdown patterns
+  - path: "references/badge-catalog.md"
+    description: shields.io badge patterns and common combos
+  - path: "references/best-practices.md"
+    description: Do's and don'ts from top OSS READMEs
+  - path: "templates/BLANK_README.md"
+    description: Blank English template with all placeholders
+  - path: "templates/BLANK_README.zh-CN.md"
+    description: Blank Simplified Chinese template with all placeholders
