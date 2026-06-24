@@ -42,11 +42,13 @@ Run the skill against `sample-project/` with the `cli` template variant. Expecte
 
 Differences worth noticing:
 
-- The output has **shields.io badges** in reference style at the bottom.
+- The output has **3 default badges** (License + Version + Last Commit) in reference style at the bottom.
 - The output has a **collapsible Table of Contents** anchored to actual headings.
 - The output has **back-to-top links** after every section.
-- The output adds a **Roadmap** section even though the user didn't write one, because libraries/CLIs benefit from forward-looking structure.
+- The output includes a **Testing** section (auto-detected from `package.json` `test` script) but omits Configuration, Deployment, Security, Architecture, FAQ, and Roadmap — none of their detection triggers are met for hello-counter.
+- The output includes a **Star History** chart (default on, no opt-out present).
 - The output fills `Getting Started -> Installation` with the actual install path inferred from `package.json`.
+- The output links to `CONTRIBUTING.md` (default behavior) instead of inline Fork→Branch→PR.
 
 ## How to reproduce
 

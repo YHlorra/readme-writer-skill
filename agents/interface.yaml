@@ -1,5 +1,5 @@
 name: readme-writer
-version: 1.1.0
+version: 1.2.0
 description: >
   Generate production-quality README.md for any project by analyzing its codebase,
   tech stack, and structure. Default output is bilingual (README.md English + README.zh-CN.md Chinese).
@@ -83,12 +83,16 @@ quality_checks:
 
 references:
   - path: "references/template-structure.md"
-    description: Full section spec with HTML/Markdown patterns
+    description: Section spec, detection triggers, CN translation table, modern components catalog
   - path: "references/badge-catalog.md"
     description: shields.io badge patterns and common combos
   - path: "references/best-practices.md"
-    description: Do's and don'ts from top OSS READMEs
+    description: Do's/don'ts, section rendering rules, component decisions, project-type adaptation
+  - path: "references/personalization.md"
+    description: user.json fields and behavior
+  - path: "references/language-support.md"
+    description: Bilingual output, toggle, language enum, CN translation table, slug convention
   - path: "templates/BLANK_README.md"
-    description: Blank English template with all placeholders
+    description: Blank English template with sparse placeholders
   - path: "templates/BLANK_README.zh-CN.md"
-    description: Blank Simplified Chinese template with all placeholders
+    description: Blank Simplified Chinese template with sparse placeholders

@@ -2,11 +2,9 @@
 
 **[English](README.md) | [中文](README.zh-CN.md)**
 
-[![贡献者][contributors-shield]][contributors-url]
-[![复刻][forks-shield]][forks-url]
-[![星标][stars-shield]][stars-url]
-[![问题][issues-shield]][issues-url]
-[![MIT 许可证][license-shield]][license-url]
+[![License][license-shield]][license-url]
+[![Version][version-shield]][version-url]
+[![Last Commit][last-commit-shield]][last-commit-url]
 
 <br />
 <div align="center">
@@ -15,30 +13,33 @@
   <p align="center">
     极简的命令行工具，统计 stdin 输入的行数。
     <br />
-    <a href="#使用方法"><strong>查看文档 &raquo;</strong></a>
+    <a href="https://github.com/OWNER/hello-counter"><strong>查看文档 »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/OWNER/hello-counter/issues/new?labels=bug">报告 Bug</a>
-    &middot;
-    <a href="https://github.com/OWNER/hello-counter/issues/new?labels=enhancement">请求功能</a>
+    <a href="https://github.com/OWNER/hello-counter/issues">报告 Bug</a>
+    ·
+    <a href="https://github.com/OWNER/hello-counter/issues">请求功能</a>
   </p>
 </div>
 
 <details>
-<summary>目录</summary>
-
-1. [关于本项目](#关于本项目)
-   - [技术栈](#技术栈)
-2. [快速开始](#快速开始)
-   - [前置条件](#前置条件)
-   - [安装](#安装)
-3. [使用方法](#使用方法)
-4. [路线图](#路线图)
-5. [贡献指南](#贡献指南)
-6. [许可证](#许可证)
-7. [联系方式](#联系方式)
-8. [致谢](#致谢)
-
+  <summary>目录</summary>
+  <ol>
+    <li><a href="#about-the-project">关于本项目</a></li>
+    <li><a href="#built-with">技术栈</a></li>
+    <li><a href="#getting-started">快速开始</a>
+      <ul>
+        <li><a href="#prerequisites">前置条件</a></li>
+        <li><a href="#installation">安装</a></li>
+      </ul>
+    </li>
+    <li><a href="#testing">测试</a></li>
+    <li><a href="#usage">使用方法</a></li>
+    <li><a href="#contributing">贡献指南</a></li>
+    <li><a href="#license">许可证</a></li>
+    <li><a href="#contact">联系方式</a></li>
+    <li><a href="#acknowledgments">致谢</a></li>
+  </ol>
 </details>
 
 ## 关于本项目
@@ -47,10 +48,11 @@
 
 适用于快速 sanity check、日志分析，或作为 shell 管道入门的教学示例。
 
+<p align="right">(<a href="#readme-top">回到顶部</a>)</p>
+
 ### 技术栈
 
-- [Node.js](https://nodejs.org/)
-- [JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
+* [Node.js](https://nodejs.org/)
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
@@ -58,7 +60,7 @@
 
 ### 前置条件
 
-- Node.js >= 14
+* Node.js >= 14
 
 ### 安装
 
@@ -73,6 +75,18 @@ npm install -g hello-counter
 ```sh
 npx hello-counter < input.txt
 ```
+
+<p align="right">(<a href="#readme-top">回到顶部</a>)</p>
+
+## 测试
+
+运行测试套件：
+
+```sh
+npm test
+```
+
+CLI 工具的测试用于验证正确的行计数行为。退出码 `0` 表示所有测试通过；退出码 `1` 表示有一个或多个测试失败。
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
@@ -98,36 +112,20 @@ hello-counter < README.md
 
 ### 退出码
 
-- `0` &mdash; 成功
-- `1` &mdash; stdin 错误或意外的 EOF
-
-<p align="right">(<a href="#readme-top">回到顶部</a>)</p>
-
-## 路线图
-
-- [ ] 添加 `--words` 参数统计单词数
-- [ ] 添加 `--bytes` 参数统计字节数
-- [ ] 添加 `--unique` 参数去重
-
-详见 [open issues](https://github.com/OWNER/hello-counter/issues)。
+* `0` — 成功
+* `1` — stdin 错误或意外的 EOF
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
 ## 贡献指南
 
-欢迎 PR。重大变更请先开 issue 讨论。
-
-1. Fork 仓库
-2. 创建特性分支（`git checkout -b feat/words`）
-3. 提交更改（`git commit -m 'feat: --words flag'`）
-4. 推送到分支（`git push origin feat/words`）
-5. 发起 Pull Request
+See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
 ## 许可证
 
-本项目使用 MIT 许可证分发。详见 [`LICENSE`](https://github.com/OWNER/hello-counter/blob/main/LICENSE)。
+Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
@@ -139,18 +137,19 @@ hello-counter < README.md
 
 ## 致谢
 
-- [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
-<!-- 引用式链接定义 -->
-[contributors-shield]: https://img.shields.io/github/contributors/OWNER/hello-counter.svg?style=for-the-badge
-[contributors-url]: https://github.com/OWNER/hello-counter/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/OWNER/hello-counter.svg?style=for-the-badge
-[forks-url]: https://github.com/OWNER/hello-counter/network/members
-[stars-shield]: https://img.shields.io/github/stars/OWNER/hello-counter.svg?style=for-the-badge
-[stars-url]: https://github.com/OWNER/hello-counter/stargazers
-[issues-shield]: https://img.shields.io/github/issues/OWNER/hello-counter.svg?style=for-the-badge
-[issues-url]: https://github.com/OWNER/hello-counter/issues
+<!-- MARKDOWN LINKS & IMAGES -->
 [license-shield]: https://img.shields.io/github/license/OWNER/hello-counter.svg?style=for-the-badge
 [license-url]: https://github.com/OWNER/hello-counter/blob/main/LICENSE
+[version-shield]: https://img.shields.io/github/v/tag/OWNER/hello-counter.svg?style=for-the-badge
+[version-url]: https://github.com/OWNER/hello-counter/releases
+[last-commit-shield]: https://img.shields.io/github/last-commit/OWNER/hello-counter.svg?style=for-the-badge
+[last-commit-url]: https://github.com/OWNER/hello-counter/commits/main
+
+<!-- STAR HISTORY — default on when stars > 50. Opt-out: DISABLE_STAR_HISTORY directive -->
+<a href="https://star-history.com/#OWNER/hello-counter">
+  <img src="https://api.star-history.com/svg?repos=OWNER/hello-counter&type=Date" alt="Star History"/>
+</a>

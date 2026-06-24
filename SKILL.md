@@ -1,6 +1,6 @@
 ---
 name: readme-writer
-version: 1.1.0
+version: 1.2.0
 license: MIT
 description: >
   Generate production-quality README.md for any project by analyzing its codebase,
@@ -45,27 +45,7 @@ Use `ctx_batch_execute` or direct file reads. Do NOT guess — read actual confi
 
 ### Phase 2: Section Assembly
 
-Generate each section following the template structure in [references/template-structure.md](references/template-structure.md).
-
-Section order (fixed):
-
-```
-1. Shields / Badges
-2. Project Logo + Title + Tagline
-3. Table of Contents (collapsible)
-4. About The Project
-   └── Built With
-5. Getting Started
-   ├── Prerequisites
-   └── Installation
-6. Usage
-7. Roadmap (optional)
-8. Contributing
-9. License
-10. Contact
-11. Acknowledgments
-12. Reference-Style Link Definitions
-```
+Generate each section following the template structure in [references/template-structure.md](references/template-structure.md) (single source of truth for section order, detection triggers, CN translation table, and rendering rules).
 
 ### Phase 3: Output
 
@@ -79,8 +59,8 @@ Write the README.md to the project root. Return the file path.
 4. **Collapsible TOC** using `<details><summary>Table of Contents</summary>...</details>`
 5. **Centered header** using `<div align="center">` with logo, title, description, and action links
 6. **Code blocks** with language hints for all commands
-7. **Shields.io badges** for: contributors, forks, stars, issues, license, LinkedIn (when applicable)
-8. **Adapt sections** — skip Roadmap if no milestones exist; skip Acknowledgments if none; always include About, Getting Started, Usage, License, Contact
+7. **Default badges**: License + Version + Last Commit (3). Optional: Stars (user.json opt-in), Issues (default on), Contributors (monorepo only). Removed: Forks, LinkedIn.
+8. **Adapt sections** — skip Roadmap unless `ROADMAP.md` exists or `<!-- ENABLE_ROADMAP -->` present; skip Acknowledgments if none; always include About, Getting Started, Usage, License, Contact.
 
 ## Quality Checklist
 
@@ -92,58 +72,10 @@ Before delivering, verify:
 - [ ] Reference-style links at bottom match all `[text][ref]` usages above
 - [ ] No leftover placeholder text (`project_title`, `github_username`) without `<!-- TODO -->` markers
 
-## Adaptation Guide
-
-| Project Type | Emphasize | Skip/Minimize |
-|---|---|---|
-| CLI tool | Usage examples, flags, config | Screenshots |
-| Web app | Screenshots, demo link, deployment | CLI flags |
-| Library | API reference, install, usage snippets | Roadmap |
-| Monorepo | Architecture diagram, package list | Single install steps |
-| Internal tool | Setup, env vars, team contacts | Contributing (use `standard` template) |
-
 ## Reference Map
 
-- [Template Structure](references/template-structure.md) — full section spec with HTML/Markdown patterns
-- [Badge Catalog](references/badge-catalog.md) — shields.io badge patterns and common combos
-- [Best Practices](references/best-practices.md) — do's and don'ts from top OSS READMEs
-
-## Personalization via user.json
-
-The skill reads an optional `user.json` to pre-fill recurring fields. Recognized fields:
-
-| Field | Used For |
-|---|---|
-| `github.username` | Replaces `OWNER` in badge URLs and GitHub links |
-| `open_source.default_license` | Pre-fills the License section when the project has no LICENSE file |
-| `open_source.acknowledgments[]` | Auto-inserted into the Acknowledgments section |
-| `sponsorship.*` | Added to Acknowledgments and `.github/FUNDING.yml` |
-
-**Location:** `<skill_install_dir>/user.json` — for example `~/.claude/skills/readme-writer/user.json`. It is **skill-internal**, not per-project: one `user.json` per skill install, shared across every project the skill touches.
-
-`user.json` is **never committed** when open-sourcing the skill. The skill ships with `.gitignore` excluding it. The maintainer's local copy lives only on their machine.
-
-## Language Support
-
-Generated READMEs are produced as a **two-file bilingual pair** by default:
-
-- `README.md` — English (GitHub renders this by default)
-- `README.zh-CN.md` — Simplified Chinese
-
-Both files cross-link via a top-of-file toggle:
-
-```markdown
-<a id="readme-top"></a>
-
-**[English](README.md) | [中文](README.zh-CN.md)**
-```
-
-GitHub renders `README.md` by default regardless of browser language; the toggle is the manual switch.
-
-Override via the `language` input:
-
-| Value | Output |
-|---|---|
-| `both` (default) | Both files with cross-link toggle |
-| `en` | Only `README.md`, English only |
-| `zh-CN` | Only `README.zh-CN.md`, Chinese only |
+- [Template Structure](references/template-structure.md) — section spec, detection triggers, CN translation table, modern components
+- [Badge Catalog](references/badge-catalog.md) — shields.io badge patterns
+- [Best Practices](references/best-practices.md) — do's/don'ts, section rendering rules, component decisions, project-type adaptation
+- [Personalization](references/personalization.md) — user.json fields and behavior
+- [Language Support](references/language-support.md) — bilingual output, toggle, language enum, CN translation table, slug convention

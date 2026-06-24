@@ -2,11 +2,9 @@
 
 **[English](README.md) | [中文](README.zh-CN.md)**
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![License][license-shield]][license-url]
+[![Version][version-shield]][version-url]
+[![Last Commit][last-commit-shield]][last-commit-url]
 
 <br />
 <div align="center">
@@ -15,30 +13,33 @@
   <p align="center">
     Tiny CLI that counts lines in stdin.
     <br />
-    <a href="#usage"><strong>Explore the docs &raquo;</strong></a>
+    <a href="https://github.com/OWNER/hello-counter"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/OWNER/hello-counter/issues/new?labels=bug">Report Bug</a>
-    &middot;
-    <a href="https://github.com/OWNER/hello-counter/issues/new?labels=enhancement">Request Feature</a>
+    <a href="https://github.com/OWNER/hello-counter/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/OWNER/hello-counter/issues">Request Feature</a>
   </p>
 </div>
 
 <details>
-<summary>Table of Contents</summary>
-
-1. [About The Project](#about-the-project)
-   - [Built With](#built-with)
-2. [Getting Started](#getting-started)
-   - [Prerequisites](#prerequisites)
-   - [Installation](#installation)
-3. [Usage](#usage)
-4. [Roadmap](#roadmap)
-5. [Contributing](#contributing)
-6. [License](#license)
-7. [Contact](#contact)
-8. [Acknowledgments](#acknowledgments)
-
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#built-with">Built With</a></li>
+    <li><a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#testing">Testing</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
 </details>
 
 ## About The Project
@@ -47,10 +48,11 @@
 
 Use it for quick sanity checks, log analysis, or as a teaching example for piping in shell scripts.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Built With
 
-- [Node.js](https://nodejs.org/)
-- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+* [Node.js](https://nodejs.org/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -58,7 +60,7 @@ Use it for quick sanity checks, log analysis, or as a teaching example for pipin
 
 ### Prerequisites
 
-- Node.js >= 14
+* Node.js >= 14
 
 ### Installation
 
@@ -73,6 +75,18 @@ Or run without installing:
 ```sh
 npx hello-counter < input.txt
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Testing
+
+Run the test suite:
+
+```sh
+npm test
+```
+
+For a CLI tool, tests verify correct line-counting behavior. Exit code `0` means all tests passed; exit code `1` means one or more tests failed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -98,36 +112,20 @@ hello-counter < README.md
 
 ### Exit codes
 
-- `0` &mdash; success
-- `1` &mdash; stdin error or unexpected EOF
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Roadmap
-
-- [ ] Add `--words` flag for word counting
-- [ ] Add `--bytes` flag for byte counting
-- [ ] Add `--unique` flag for deduplication
-
-See the [open issues](https://github.com/OWNER/hello-counter/issues) for the full backlog.
+* `0` — success
+* `1` — stdin error or unexpected EOF
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Contributing
 
-PRs welcome. Open an issue first to discuss major changes.
-
-1. Fork the repo
-2. Create your feature branch (`git checkout -b feat/words`)
-3. Commit your changes (`git commit -m 'feat: --words flag'`)
-4. Push to the branch (`git push origin feat/words`)
-5. Open a Pull Request
+See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## License
 
-Distributed under the MIT License. See [`LICENSE`](https://github.com/OWNER/hello-counter/blob/main/LICENSE) for the full text.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -139,18 +137,19 @@ Project Link: [https://github.com/OWNER/hello-counter](https://github.com/OWNER/
 
 ## Acknowledgments
 
-- [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- REFERENCE-STYLE LINK DEFINITIONS -->
-[contributors-shield]: https://img.shields.io/github/contributors/OWNER/hello-counter.svg?style=for-the-badge
-[contributors-url]: https://github.com/OWNER/hello-counter/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/OWNER/hello-counter.svg?style=for-the-badge
-[forks-url]: https://github.com/OWNER/hello-counter/network/members
-[stars-shield]: https://img.shields.io/github/stars/OWNER/hello-counter.svg?style=for-the-badge
-[stars-url]: https://github.com/OWNER/hello-counter/stargazers
-[issues-shield]: https://img.shields.io/github/issues/OWNER/hello-counter.svg?style=for-the-badge
-[issues-url]: https://github.com/OWNER/hello-counter/issues
+<!-- MARKDOWN LINKS & IMAGES -->
 [license-shield]: https://img.shields.io/github/license/OWNER/hello-counter.svg?style=for-the-badge
 [license-url]: https://github.com/OWNER/hello-counter/blob/main/LICENSE
+[version-shield]: https://img.shields.io/github/v/tag/OWNER/hello-counter.svg?style=for-the-badge
+[version-url]: https://github.com/OWNER/hello-counter/releases
+[last-commit-shield]: https://img.shields.io/github/last-commit/OWNER/hello-counter.svg?style=for-the-badge
+[last-commit-url]: https://github.com/OWNER/hello-counter/commits/main
+
+<!-- STAR HISTORY — default on when stars > 50. Opt-out: DISABLE_STAR_HISTORY directive -->
+<a href="https://star-history.com/#OWNER/hello-counter">
+  <img src="https://api.star-history.com/svg?repos=OWNER/hello-counter&type=Date" alt="Star History"/>
+</a>

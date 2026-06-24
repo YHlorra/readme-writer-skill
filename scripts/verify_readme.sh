@@ -8,7 +8,15 @@
 # one-liner for replacing the OWNER placeholder. The script does NOT search the
 # project or workspace — user.json is per-skill-install, not per-project.
 
-set -e
+# NOTE: set -e removed — every command below handles its own non-zero exit
+# explicitly (|| true, || false, || continue) or exits explicitly.
+
+# --sample flag (must consume before TARGET is set)
+_smode=0
+if [[ "$1" == "--sample" ]]; then
+  _smode=1
+  shift
+fi
 
 TARGET="${1:-README.md}"
 
@@ -110,6 +118,70 @@ fi
 # 5. TODO markers (informational)
 todos=$(grep -cE '<!--\s*TODO' "$TARGET" || true)
 echo "[5] TODO markers: $todos (review before publishing)"
+
+# ---------------------------------------------------------------------------
+# NEW checks (6 and 7) — additive, do not touch checks 1–5 above
+# ---------------------------------------------------------------------------
+
+# 6. required-section presence
+# --sample flag (checked before TARGET is set): only Testing required (hello-counter pattern)
+# Default (strict): all 5 auto-detected sections required
+#
+# Negative × 5 + positive gate (one-time validation, not runtime):
+#   For each section in the strict list, strip its heading from a copy of the
+#   README and run verifier in strict mode — expect FAIL. Then run on the
+#   complete post-3b example — expect PASS. Precision uses anchored regex
+#   grep -E "^#+\s*${section}\s*$" so "Testing notes" in body ≠ hit.
+
+# The 5 auto-detected sections (strict set). Each entry is a pipe-alternation
+# of English | Chinese names (per locked CN translation table in
+# references/template-structure.md §0). The regex accepts either.
+declare -a _all_sects=("Configuration|配置" "Testing|测试" "Deployment|部署" "Security|安全" "Architecture|架构")
+
+if [[ "$_smode" -eq 1 ]]; then
+  declare -a _req_sects=("Testing|测试")
+  _mode_label="sample"
+else
+  declare -a _req_sects=("${_all_sects[@]}")
+  _mode_label="strict"
+fi
+
+echo "[6] required sections ($_mode_label mode): ${_req_sects[*]}"
+
+_missing=0
+for _sect in "${_req_sects[@]}"; do
+  # Anchored: # ## ### etc, optional whitespace, exact heading text, optional trailing whitespace, line end.
+  # "Testing notes" in body text does NOT match "^#+\s*Testing\s*$"
+  if grep -qE "^#+\s*(${_sect})\s*$" "$TARGET" 2>/dev/null; then
+    # Display the human-readable section name (first alternative)
+    _name="${_sect%%|*}"
+    echo "    OK: $_name"
+  else
+    _name="${_sect%%|*}"
+    echo "    FAIL: missing required section '$_name'"
+    _missing=$((_missing + 1))
+  fi
+done
+
+if [[ "$_missing" -gt 0 ]]; then
+  echo "    FAIL: $_missing required section(s) absent"
+  fail=1
+fi
+
+# 7. Mermaid language hint
+# Positive check: fenced blocks that contain diagram keywords but lack
+# the ```mermaid language hint get a WARN (not hard fail — architecture
+# diagrams should be Mermaid but we don't over-restrict).
+_mermaid_count=$(grep -c '^```mermaid' "$TARGET" || true)
+echo "[7] mermaid blocks: $_mermaid_count"
+
+if [[ "$_mermaid_count" -eq 0 ]]; then
+  # Scan for untyped code blocks that look like architecture diagrams
+  _untyped_diagram=$(awk '/^```$/,/^```$/{if(/^```$/){b=1;next} if(/^```[^m]/){next} b=0} /graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram/{if(!b) print}' "$TARGET" || true)
+  if [[ -n "$_untyped_diagram" ]]; then
+    echo "    WARN: found diagram-like content in untyped code block; consider \`\`\`mermaid"
+  fi
+fi
 
 echo ""
 if [[ "$fail" -gt 0 ]]; then
