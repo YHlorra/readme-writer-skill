@@ -1,5 +1,7 @@
 <a id="readme-top"></a>
 
+**[English](README.md) | [中文](README.zh-CN.md)**
+
 [![License][license-shield]][license-url]
 [![Version][version-shield]][version-url]
 [![Last Commit][last-commit-shield]][last-commit-url]
