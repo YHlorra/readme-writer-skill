@@ -74,10 +74,46 @@ Shields.io badge patterns for README files.
 | Vercel | `https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white` |
 | Netlify | `https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white` |
 
+## Package Registry Badges
+
+| Badge | Pattern |
+|---|---|
+| PyPI Version | `https://img.shields.io/pypi/v/PACKAGE?style=for-the-badge` |
+| PyPI Downloads | `https://img.shields.io/pypi/dm/PACKAGE?style=for-the-badge` |
+| npm Version | `https://img.shields.io/npm/v/PACKAGE?style=for-the-badge` |
+| npm Downloads | `https://img.shields.io/npm/dm/PACKAGE?style=for-the-badge` |
+| Docker Pulls | `https://img.shields.io/docker/pulls/OWNER/IMAGE?style=for-the-badge` |
+| Crates.io | `https://img.shields.io/crates/v/PACKAGE?style=for-the-badge` |
+| Go Version | `https://img.shields.io/github/go-mod/go-version/OWNER/REPO?style=for-the-badge` |
+| Python Version | `https://img.shields.io/pypi/pyversions/PACKAGE?style=for-the-badge` |
+
+## CI / Status Badges
+
+| Badge | Pattern |
+|---|---|
+| CI Workflow | `https://img.shields.io/github/actions/workflow/status/OWNER/REPO/ci.yml?style=for-the-badge` |
+| Code Coverage | `https://img.shields.io/codecov/c/github/OWNER/REPO?style=for-the-badge` |
+| Docs | `https://img.shields.io/badge/Docs-latest-blue?style=for-the-badge` |
+| Codespaces | `https://github.com/codespaces/badge.svg` (image link to codespaces.new) |
+
+## AI / ML Tech Stack Badges
+
+| Tech | Badge |
+|---|---|
+| OpenAI | `https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white` |
+| LangChain | `https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white` |
+| Hugging Face | `https://img.shields.io/badge/Hugging%20Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black` |
+| PyTorch | `https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white` |
+| TensorFlow | `https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white` |
+| Ollama | `https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white` |
+| Anthropic | `https://img.shields.io/badge/Anthropic-191919?style=for-the-badge&logo=anthropic&logoColor=white` |
+
 ## Usage Notes
 
 - `for-the-badge` style is recommended for README headers (larger, more visual)
+- `flat-square` style is preferred for AI/Agent project headers (cleaner, more modern look)
 - `flat` style (default) is better for inline use
 - Replace `OWNER/REPO` with actual GitHub path
 - Logo names come from [Simple Icons](https://simpleicons.org/)
 - Custom colors: replace the hex value after the badge name
+- For AI projects: prefer flat-square badges in header for a cleaner, terminal-like aesthetic

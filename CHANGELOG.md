@@ -5,6 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.0.0] - 2026-06-28
+
+### Added
+- **AI/Agent project support.** The skill now detects AI/LLM/Agent projects automatically and switches to an AI-optimized README template. Detection heuristic checks dependencies (`openai`, `langchain`, `crewai`, `autogen`, `llama-index`, `transformers`, `torch`, `anthropic`, `ollama`, `vllm`, `mcp`, etc.), file names (`agent*.py`, `llm*.py`, `mcp.json`, `AGENTS.md`), and project description keywords (`LLM`, `GPT`, `agent`, `RAG`, `MCP`, `AI coding`).
+- **`references/ai-agent-readme.md`** — new reference file with AI-optimized section order (28 sections), AI project detection heuristic, 8 new section specifications, AI badge set, simplified header pattern, 6 AI project subtype variants, and 10 AI-specific writing style rules.
+- **`templates/AI_AGENT_README.md`** — new blank template for AI/Agent projects with GitHub callout syntax, simplified TOC, model provider config, AI coding agent setup, and all new sections.
+- **8 new sections for AI/Agent projects:**
+  - **Quick Start** — independent top-level section (not buried under Getting Started); cloud + one-liner install + package manager options; working code example within 5 minutes.
+  - **Breaking Changes Banner** — `> [!WARNING]` callout for version migrations, placed after header.
+  - **Connecting to Models** — LLM provider configuration (OpenAI, Anthropic, local Ollama/vLLM); config variable table.
+  - **AI Coding Agent Setup** — Claude Code plugins, Cursor/Codex skills, MCP server config, AGENTS.md documentation.
+  - **When (Not) to Use** — ✅/❌ boundary clarity lists.
+  - **Cloud / Self-Hosted Options** — Docker, Kubernetes (Helm), local development.
+  - **Telemetry** — anonymous data collection + opt-out mechanism.
+  - **Security Disclosure** — API key exposure warning + non-GitHub vulnerability channel.
+- **GitHub Callout syntax support** — `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]` documented in `references/best-practices.md` with AI-specific usage guidance.
+- **Contributors Wall** — `contrib.rocks` image for projects with > 10 contributors.
+- **Codespaces button** — auto-rendered when `.devcontainer/` exists.
+- **AI/ML tech stack badges** — OpenAI, LangChain, Hugging Face, PyTorch, TensorFlow, Ollama, Anthropic badge patterns added to `references/badge-catalog.md`.
+- **Package registry badges** — PyPI version/downloads, npm version/downloads, Docker pulls, Crates.io, Go version, Python version compatibility.
+- **23 new CN section translations** in `references/language-support.md` for all AI-specific sections (Quick Start, Connecting to Models, AI Coding Agent Setup, When (Not) to Use, Telemetry, Security Disclosure, Contributors Wall, Star History, Related Papers, Community & Support, etc.).
+- **6 AI project subtype specifications** in `references/ai-agent-readme.md`: Agent Framework, Application Platform, Coding Agent, LLM Library/SDK, Model/Inference, RAG Pipeline.
+- `ai-agent` template variant added to the variant table in README.md and README.zh-CN.md.
+
+### Changed
+- **`SKILL.md` upgraded to v2.0.0.** Workflow expanded from 3 phases to 4 phases (added Phase 2: Project Type Classification). New AI/Agent Detection Heuristic section. Rules split into Universal, Traditional, and AI/Agent categories (12 AI-specific rules). Quality checklist expanded with AI-specific verification items. Reference Map updated to include `ai-agent-readme.md`.
+- **`references/best-practices.md` restructured.** Do's/Don'ts split into Universal and AI/Agent categories (12 AI Do's, 8 AI Don'ts). Section Rendering Quick Reference split into Traditional and AI/Agent tables. Component Decision Rules split into All Projects and AI/Agent Only. Badge Hygiene split into Traditional and AI/Agent tables. New GitHub Callout Syntax section. Project Type Quick Reference split into Traditional and AI/Agent subtype tables. Common Mistakes table expanded with 5 AI-specific entries.
+- **`references/badge-catalog.md` expanded.** Added Package Registry Badges, CI/Status Badges, AI/ML Tech Stack Badges sections. Usage Notes updated with `flat-square` style recommendation for AI projects.
+- **`README.md` and `README.zh-CN.md` updated.** New "What's New in v2.0" section. New "AI/Agent Project Support" section with New Sections table (distilled-from column) and AI Project Subtypes table. How It Works section updated to 4 phases. Auto-Detected Sections split into Traditional and AI/Agent tables. Modern Components table expanded with GitHub Callouts, Codespaces button, Contributors Wall. Acknowledgments expanded with 5 AI project inspirations. Template Variants table includes `ai-agent` variant.
+- **Star History behavior changed for AI projects.** Now always on by default (no star count threshold), because AI projects trend fast and early star history is motivating. Traditional projects retain the stars > 50 threshold.
+- **Badge set changed for AI projects.** Last Commit badge removed (version badge already signals activity). Downloads badge added (PyPI dm / Docker pulls / npm dm). Discord/Community badge auto-detected. Stars always on.
+- **`VERSION` bumped from 1.2.0 to 2.0.0.**
+
+### Distilled From
+Patterns distilled from analyzing top-trending GitHub AI projects (2024-2026):
+- **CrewAI** — AI Coding Agent Setup (Skills/MCP), commercial suite前置, learning resources, YAML config driven quick start, troubleshooting, telemetry
+- **AutoGen** — Breaking Changes banner, timeline announcements, GitHub Codespaces one-click launch, paper citations, Contributors Wall, Legal Notices
+- **Dify** — Multi-language toggle (5 languages), cloud vs self-hosted comparison, competitive comparison table, Helm Chart/K8s deployment, Security Disclosure, Star History
+- **Open Interpreter** — Minimal style, one-line install (curl|sh), Harness Emulation concept, Agent Client Protocol (ACP) support, MCP/skills/hooks/permissions/AGENTS.md support, platform-specific install (macOS/Linux/Windows)
+- **BabyAGI** — GitHub Callouts (`> [!NOTE]`, `> [!CAUTION]`), experimental nature disclosure, self-describing API style, function metadata, dashboard, pre-loaded functions, self-building agent
+
 ## [1.2.0] - 2026-06-24
 
 ### Added

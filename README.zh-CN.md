@@ -11,7 +11,7 @@
   <h3 align="center">readme-writer</h3>
 
   <p align="center">
-    从任何代码库生成生产级 README.md。默认双语输出。
+    从任何代码库生成生产级 README.md — 现已支持 AI/Agent 项目。
     <br />
     <a href="#usage"><strong>查看文档 &raquo;</strong></a>
     <br />
@@ -27,6 +27,7 @@
 
 1. [关于本项目](#about-the-project)
    - [技术栈](#built-with)
+   - [v2.0 新特性](#whats-new-in-v20)
 2. [快速开始](#getting-started)
    - [前置条件](#prerequisites)
    - [安装](#installation)
@@ -34,14 +35,18 @@
    - [触发短语](#trigger-phrases)
    - [模板变体](#template-variants)
 4. [工作原理](#how-it-works)
+   - [AI/Agent 检测](#aiagent-detection)
    - [自动检测章节](#auto-detected-sections)
    - [现代组件](#modern-components)
-5. [验证](#verification)
-6. [个性化](#personalization)
-7. [贡献指南](#contributing)
-8. [许可证](#license)
-9. [联系方式](#contact)
-10. [致谢](#acknowledgments)
+5. [AI/Agent 项目支持](#aiagent-project-support)
+   - [新增章节](#new-sections)
+   - [AI 项目子类型](#ai-project-subtypes)
+6. [验证](#verification)
+7. [个性化](#personalization)
+8. [贡献指南](#contributing)
+9. [许可证](#license)
+10. [联系方式](#contact)
+11. [致谢](#acknowledgments)
 
 </details>
 
@@ -63,6 +68,23 @@
 - [YAML](https://yaml.org/)
 - [Bash](https://www.gnu.org/software/bash/)
 - [shields.io](https://shields.io/) — 徽章生成
+
+### v2.0 新特性
+
+**AI/Agent 项目支持。** Skill 现在能自动检测 AI/LLM/Agent 项目，并切换到 AI 优化的 README 模板，包含 AI 时代必需但传统模板缺失的章节：
+
+- **Quick Start** 作为顶级章节（不再埋在 Getting Started 下面）
+- **Connecting to Models** — LLM 供应商配置（OpenAI、Anthropic、本地模型）
+- **AI Coding Agent Setup** — Skills、MCP、AGENTS.md 文档
+- **When (Not) to Use** — ✅/❌ 清单明确边界
+- **GitHub Callouts** — `> [!WARNING]`、`> [!NOTE]`、`> [!TIP]`、`> [!CAUTION]` 语法
+- **Security Disclosure** — API key 警告和非 GitHub 漏洞报告渠道
+- **Telemetry** — 检测到时提供 opt-out 文档
+- **Contributors Wall** — 社区项目的 contrib.rocks 图片
+
+模式蒸馏自分析 GitHub 热门 AI 项目：CrewAI、AutoGen、Dify、Open Interpreter、BabyAGI、LangChain、LlamaIndex、AutoGPT、Flowise、Hugging Face Transformers。
+
+详见下方 [AI/Agent 项目支持](#aiagent-project-support)。
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
@@ -95,9 +117,10 @@ ls ~/.claude/skills/readme-writer/SKILL.md
 
 1. 扫描项目根目录的 `package.json`、`requirements.txt`、`go.mod` 等。
 2. 检测语言、框架、许可证和入口点。
-3. 自动检测要渲染的章节（见[自动检测章节](#auto-detected-sections)）。
-4. 组装包含现代组件的 README（见[现代组件](#modern-components)）。
-5. 写入 `<project_root>/README.md` + `<project_root>/README.zh-CN.md`。
+3. 运行 [AI/Agent 检测启发式](#aiagent-detection) 对项目分类。
+4. 自动检测要渲染的章节（见[自动检测章节](#auto-detected-sections)）。
+5. 组装包含现代组件的 README（见[现代组件](#modern-components)）。
+6. 写入 `<project_root>/README.md` + `<project_root>/README.zh-CN.md`。
 
 ### 触发短语
 
@@ -121,22 +144,40 @@ ls ~/.claude/skills/readme-writer/SKILL.md
 | `cli` | 命令行工具 |
 | `webapp` | 前端/全栈应用 |
 | `monorepo` | 多包仓库 |
+| `ai-agent` | AI/LLM/Agent 项目（自动检测） |
+
+> `ai-agent` 变体在 [AI/Agent 检测启发式](#aiagent-detection) 触发时自动选择，也可手动强制指定。
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
 ## 工作原理
 
-Skill 分三个阶段运行：
+Skill 分四个阶段运行：
 
-**阶段 1 — 代码库分析。** 读取实际配置文件（`package.json`、`pyproject.toml` 等），使用并行文件读取。绝不猜测。
+**阶段 1 — 代码库分析。** 读取实际配置文件（`package.json`、`pyproject.toml` 等），使用并行文件读取。绝不猜测。同时扫描 AI 信号：LLM 依赖、MCP 配置、`AGENTS.md`、模型配置文件。
 
-**阶段 2 — 章节组装。** 按照 `references/template-structure.md` 生成每个章节。自动检测章节仅在检测触发条件满足时渲染。现代组件根据项目元数据添加。
+**阶段 2 — 项目类型分类。** 运行 AI/Agent 检测启发式。同时检测：CLI、Library、Webapp、Monorepo、Internal tool。
 
-**阶段 3 — 验证。** 检查徽章 URL、目录锚点、引用链接、必需章节存在性和 Mermaid 语言提示。
+**阶段 3 — 章节组装。** 按照对应模板生成每个章节：
+- **AI/Agent 项目：** `references/ai-agent-readme.md`（AI 优化章节顺序、GitHub callouts、简化头部）
+- **传统项目：** `references/template-structure.md`（折叠 TOC、居中头部、回到顶部链接）
+
+**阶段 4 — 验证。** 检查徽章 URL、目录锚点、引用链接、必需章节存在性和 Mermaid 语言提示。
+
+### AI/Agent 检测
+
+当以下**任一**条件为真时，分类为 **AI/Agent** 类型：
+
+- 依赖包含：`openai`、`langchain`、`crewai`、`autogen`、`llama-index`、`transformers`、`torch`、`anthropic`、`cohere`、`google-generativeai`、`ollama`、`vllm`、`open-interpreter`、`dify`、`mcp`、`semantic-kernel`、`guidance`、`instructor`
+- 项目描述提及：`LLM`、`GPT`、`agent`、`RAG`、`fine-tun`、`embedding`、`vector database`、`prompt engineer`、`MCP`、`AI coding`
+- 文件名：`agent*.py`、`llm*.py`、`model*.py`、`prompt*.py`、`rag*.py`、`mcp.json`、`.mcp.json`、`AGENTS.md`
+- 目录名：`agents/`、`llm/`、`models/`、`prompts/`、`rag/`、`tools/`（含 agentic 模式）
+
+分类为 AI/Agent 时，Skill 使用 `references/ai-agent-readme.md` 中的 AI 优化章节顺序和渲染规则。
 
 ### 自动检测章节
 
-章节仅在检测触发条件满足时渲染——不过度渲染：
+**传统项目** — 章节仅在检测触发条件满足时渲染：
 
 | 章节 | 触发条件 |
 |---|---|
@@ -148,14 +189,63 @@ Skill 分三个阶段运行：
 | 常见问题 | 仅手动（无自动检测） |
 | 路线图 | `ROADMAP.md` 存在或 `<!-- ENABLE_ROADMAP -->` 指令 |
 
+**AI/Agent 项目** — 额外章节：
+
+| 章节 | 触发条件 |
+|---|---|
+| Quick Start | **总是渲染**（检测到 AI 类型） |
+| Connecting to Models | **总是渲染**（检测到 AI 类型） |
+| AI Coding Agent Setup | `mcp.json` / `.mcp.json` / `AGENTS.md` / `skills/` 存在；否则 TODO 占位符 |
+| When (Not) to Use | **总是渲染**（检测到 AI 类型） |
+| Security Disclosure | **总是渲染**（检测到 AI 类型） |
+| Telemetry | 代码引用 telemetry/analytics |
+| Star History | **AI 项目总是开启** |
+
 ### 现代组件
 
 | 组件 | 行为 |
 |---|---|
-| Star History 图表 | stars > 50 时默认开启；通过 `<!-- DISABLE_STAR_HISTORY -->` 退出 |
+| Star History 图表 | 传统：stars > 50 时开启。AI：**总是开启**。通过 `<!-- DISABLE_STAR_HISTORY -->` 退出 |
 | Mermaid 图表 | 架构章节渲染时给空块 + TODO |
 | 动态 shields | 自动检测 CI / coverage / downloads |
 | GitHub Stats 卡片 | 仅 opt-in 第三方 |
+| GitHub Callouts | AI 项目：使用 `> [!NOTE]`、`> [!WARNING]`、`> [!TIP]`、`> [!CAUTION]` 代替粗体文本 |
+| Codespaces 按钮 | `.devcontainer/` 存在时开启 |
+| Contributors Wall | 贡献者 > 10 时开启 |
+
+<p align="right">(<a href="#readme-top">回到顶部</a>)</p>
+
+## AI/Agent 项目支持
+
+v2.0 引入了针对 AI、LLM 和 Agent 项目的专门 README 模式。这些模式蒸馏自分析 2024-2026 年 GitHub 热门 AI 项目。
+
+### 新增章节
+
+| 章节 | 用途 | 蒸馏来源 |
+|---|---|---|
+| **Quick Start** | 5 分钟内可运行代码；云端 + 一键安装 + 包管理器 | Open Interpreter、Dify、CrewAI |
+| **Connecting to Models** | LLM 供应商配置（OpenAI、Anthropic、本地 Ollama/vLLM） | CrewAI、AutoGen |
+| **AI Coding Agent Setup** | Skills、MCP、AGENTS.md 文档 | CrewAI (Skills/MCP)、Open Interpreter |
+| **When (Not) to Use** | ✅/❌ 边界清晰度 | Dify（竞品对比） |
+| **Breaking Changes Banner** | `> [!WARNING]` callout 用于版本迁移 | AutoGen |
+| **Security Disclosure** | API key 警告、非 GitHub 漏洞报告渠道 | Dify |
+| **Telemetry** | 匿名数据收集 + opt-out | CrewAI |
+| **Contributors Wall** | 社区 contrib.rocks 图片 | AutoGen |
+
+### AI 项目子类型
+
+Skill 识别 6 种 AI 项目子类型，各有定制章节要求：
+
+| 子类型 | 示例 | 关键章节 |
+|---|---|---|
+| Agent Framework | CrewAI、AutoGen | Agents、Tasks、Tools、Model Config |
+| Application Platform | Dify、Flowise | Cloud vs Self-Host、UI 截图 |
+| Coding Agent | Open Interpreter、Codex | 一键安装、Harness、Sandbox |
+| LLM Library/SDK | LangChain、LlamaIndex | Quick Start 代码、Core Concepts |
+| Model/Inference | Transformers、vLLM | Model Zoo、Hardware Requirements |
+| RAG Pipeline | — | Data Sources、Embedding Models、Retrieval |
+
+完整规范：[references/ai-agent-readme.md](references/ai-agent-readme.md)。
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 
@@ -219,6 +309,11 @@ bash scripts/verify_readme.sh path/to/README.md
 - [readme.so](https://readme.so) — 章节库参考
 - [shields.io](https://shields.io/) — 徽章生成
 - [star-history.com](https://star-history.com) — Star History 图表
+- [CrewAI](https://github.com/crewAIInc/crewAI) — AI Coding Agent Setup 模式灵感
+- [AutoGen](https://github.com/microsoft/autogen) — Breaking Changes 横幅模式灵感
+- [Dify](https://github.com/langgenius/dify) — Cloud/Self-Host 对比模式灵感
+- [Open Interpreter](https://github.com/OpenInterpreter/open-interpreter) — 简洁头部和一键安装模式灵感
+- [BabyAGI](https://github.com/yoheinakajima/babyagi) — GitHub Callout 语法灵感
 
 <p align="right">(<a href="#readme-top">回到顶部</a>)</p>
 

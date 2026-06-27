@@ -33,7 +33,7 @@ Override via the `language` input:
 |---|---|
 | Configuration | 配置 |
 | Testing | 测试 |
-| Deployment | 部署 |
+| Deployment | 部署 / 部署选项 |
 | Security | 安全 |
 | Architecture | 架构 |
 | FAQ | 常见问题 |
@@ -44,6 +44,29 @@ Override via the `language` input:
 | License | 许可证 |
 | Contact | 联系方式 |
 | Acknowledgments | 致谢 |
+| Quick Start | 快速上手 |
+| What is [Project] | 什么是 [Project] |
+| Why [Project] | 为什么选择 [Project] |
+| Key Features | 核心特性 |
+| Features | 特性 |
+| Connecting to Models | 连接模型 |
+| Model Configuration | 模型配置 |
+| Use with AI Coding Agents | AI 编码代理支持 |
+| AI Coding Agent Setup | AI 编码代理配置 |
+| When to Use [Project] | 适用场景 |
+| When (Not) to Use | 适用 / 不适用场景 |
+| Cloud / Self-Hosted Options | 云端 / 自托管选项 |
+| Deployment Options | 部署选项 |
+| Telemetry | 遥测数据 |
+| Security Disclosure | 安全披露 |
+| Examples | 示例 |
+| Tutorials | 教程 |
+| Built With | 技术栈 |
+| Roadmap | 路线图 |
+| Star History | Star 历史 |
+| Contributors Wall | 贡献者墙 |
+| Related Papers | 相关论文 |
+| Community & Support | 社区与支持 |
 
 ## Anchor Slug Convention
 
